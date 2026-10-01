@@ -29,14 +29,15 @@ On start, print `mkserve vX → http://127.0.0.1:3000 (root: /abs/path)`. Ctrl+C
 
 ## 4. HTTP API
 
-| Route                                        | Response                                                                                                             |
-| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `GET /` and `GET /*.md` (non-API, non-asset) | SPA `index.html` (client resolves path from URL)                                                                     |
-| `GET /api/tree`                              | JSON tree: `{ name, path, type: "dir"\|"file", children? }`; dirs first, then files, alphabetical (case-insensitive) |
-| `GET /api/render?path=<rel>`                 | `{ path, html, title, mtime }`; 404 if missing, 400 if not markdown                                                  |
-| `GET /api/events`                            | SSE stream: `change {path}`, `tree {}` (add/unlink/addDir/unlinkDir), `ping` every 30 s                              |
-| `GET /@ws/<rel>`                             | Raw workspace file (images etc. referenced from Markdown)                                                            |
-| `GET /assets/*`                              | Built client bundle (`@fastify/static`)                                                                              |
+| Route                                        | Response                                                                                                                                                                                                                                         |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `GET /` and `GET /*.md` (non-API, non-asset) | SPA `index.html` (client resolves path from URL)                                                                                                                                                                                                 |
+| `GET /api/info`                              | `{ name, version, watch }` (workspace name for the header; client opens the SSE stream only when `watch` is true)                                                                                                                                |
+| `GET /api/tree`                              | JSON tree: `{ name, path, type: "dir"\|"file", children? }`; dirs first, then files, alphabetical (case-insensitive)                                                                                                                             |
+| `GET /api/render?path=<rel>`                 | `{ path, html, title, mtime }`; 404 if missing, 400 if not markdown                                                                                                                                                                              |
+| `GET /api/events`                            | SSE stream: `change {path}` (Markdown edited/added/removed), `tree {}` (structure or `.gitignore` changed), `asset {path}` (other file, e.g. image, changed → client reloads if the doc references it), `ping` every 30 s; 404 with `--no-watch` |
+| `GET /@ws/<rel>`                             | Raw workspace file (images etc. referenced from Markdown)                                                                                                                                                                                        |
+| `GET /assets/*`                              | Built client bundle (`@fastify/static`)                                                                                                                                                                                                          |
 
 **Security:** all paths resolved with `path.resolve(root, rel)` and rejected unless inside `root` (also after `realpath` for symlinks); gitignored/hidden paths not served via `/api/render`.
 

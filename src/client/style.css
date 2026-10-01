@@ -1,3 +1,172 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 @import 'katex/dist/katex.min.css';
+@import 'remark-github-blockquote-alert/alert.css';
+
+/* Layout ------------------------------------------------------------------ */
+
+.sidebar {
+  width: var(--sidebar-width, 18rem);
+}
+
+@media (min-width: 768px) {
+  body[data-sidebar='collapsed'] .sidebar,
+  body[data-sidebar='collapsed'] .resizer {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .resizer {
+    display: none;
+  }
+  .sidebar {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    z-index: 20;
+    width: min(80vw, 20rem);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.2);
+  }
+  body:not([data-sidebar='open']) .sidebar {
+    display: none;
+  }
+}
+
+.breadcrumb span + span::before {
+  content: '/';
+  margin-inline: 0.375rem;
+  opacity: 0.5;
+}
+
+.live-status {
+  background-color: var(--color-neutral-400);
+}
+.live-status[data-connected='true'] {
+  background-color: var(--color-emerald-500);
+}
+.live-status[data-connected='false'] {
+  background-color: var(--color-amber-500);
+}
+
+/* File tree --------------------------------------------------------------- */
+
+#tree ul ul {
+  margin-left: 0.75rem;
+  border-left: 1px solid var(--color-neutral-200);
+  padding-left: 0.25rem;
+}
+
+.tree-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.tree-row:hover {
+  background-color: var(--color-neutral-200);
+}
+.tree-file {
+  display: block;
+  padding-left: 1.25rem;
+}
+.tree-file[aria-current='page'] {
+  background-color: var(--color-sky-100);
+  color: var(--color-sky-800);
+  font-weight: 500;
+}
+.tree-chevron {
+  flex-shrink: 0;
+  transition: transform 0.1s;
+}
+.tree-dir[aria-expanded='true'] .tree-chevron {
+  transform: rotate(90deg);
+}
+
+@media (prefers-color-scheme: dark) {
+  #tree ul ul {
+    border-color: var(--color-neutral-800);
+  }
+  .tree-row:hover {
+    background-color: var(--color-neutral-800);
+  }
+  .tree-file[aria-current='page'] {
+    background-color: rgb(14 165 233 / 0.15);
+    color: var(--color-sky-300);
+  }
+}
+
+/* Document ---------------------------------------------------------------- */
+
+.prose :where(code):not(:where(pre code))::before,
+.prose :where(code):not(:where(pre code))::after {
+  content: none;
+}
+
+/* GFM task lists: checkbox instead of bullet, as on GitHub. */
+.prose ul.contains-task-list {
+  list-style: none;
+  padding-left: 0;
+}
+.prose ul.contains-task-list ul.contains-task-list {
+  padding-left: 1.5em;
+}
+.prose li.task-list-item input[type='checkbox'] {
+  margin: 0 0.5em 0.2em 0;
+  vertical-align: middle;
+}
+
+.prose .heading-anchor {
+  margin-left: 0.4em;
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+}
+.prose :is(h1, h2, h3, h4, h5, h6):hover .heading-anchor {
+  opacity: 0.4;
+}
+
+.prose pre.shiki {
+  border: 1px solid var(--color-neutral-200);
+}
+
+/* Shiki dual themes: light colors inline, dark via CSS variables. */
+@media (prefers-color-scheme: dark) {
+  .shiki {
+    background-color: var(--shiki-dark-bg) !important;
+  }
+  .shiki,
+  .shiki span {
+    color: var(--shiki-dark) !important;
+  }
+  .prose pre.shiki {
+    border-color: var(--color-neutral-800);
+  }
+}
+
+.prose pre.mermaid {
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  color: inherit;
+}
+
+/* Scroll wide formulas sideways; the padding keeps tall glyphs (limits,
+   exponents) inside the box so `overflow-y: hidden` does not clip them. */
+.prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-block: 1.25em;
+  padding-block: 0.5em;
+}
+
+.prose .markdown-alert p {
+  margin-block: 0.5em;
+}

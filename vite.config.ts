@@ -9,6 +9,13 @@ export default defineConfig({
     outDir: '../../dist/client',
     emptyOutDir: true,
   },
+  // `vp dev` serves the client; API calls go to a running `mkserve`.
+  server: {
+    proxy: {
+      '/api': 'http://127.0.0.1:3000',
+      '/@ws': 'http://127.0.0.1:3000',
+    },
+  },
 
   // Server + CLI bundle (`vp pack`).
   pack: {
@@ -56,7 +63,8 @@ export default defineConfig({
 
   // oxfmt: mirrors Google's `gts` Prettier settings.
   fmt: {
-    ignorePatterns: ['dist/**'],
+    // Fixtures are test inputs; keep them byte-for-byte.
+    ignorePatterns: ['dist/**', 'test/fixtures/**'],
     printWidth: 80,
     semi: true,
     singleQuote: true,

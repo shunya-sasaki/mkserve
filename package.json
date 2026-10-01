@@ -50,6 +50,7 @@
     "consola": "^3.4.2",
     "fastify": "^5.12.5",
     "get-port": "^7.2.0",
+    "hast-util-to-string": "^3.0.1",
     "ignore": "^7.0.11",
     "katex": "^0.18.10",
     "open": "^11.0.4",
@@ -66,7 +67,8 @@
     "remark-rehype": "^11.1.2",
     "shiki": "^4.5.0",
     "unified": "^11.0.5",
-    "unist-util-visit": "^5.1.0"
+    "unist-util-visit": "^5.1.0",
+    "vfile": "^6.0.3"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",

@@ -7,17 +7,50 @@
     <script type="module" src="./main.ts"></script>
   </head>
   <body
-    class="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100"
+    class="bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100"
   >
-    <div class="flex h-screen">
+    <header
+      class="flex h-12 items-center gap-3 border-b border-neutral-200 px-3 dark:border-neutral-800"
+    >
+      <button
+        id="sidebar-toggle"
+        type="button"
+        aria-label="Toggle sidebar"
+        class="rounded p-1.5 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+      >
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"
+          />
+        </svg>
+      </button>
+      <span id="workspace-name" class="shrink-0 font-semibold"></span>
       <nav
-        id="tree"
-        class="w-64 shrink-0 overflow-y-auto border-r border-neutral-200 p-3 dark:border-neutral-800"
+        id="breadcrumb"
+        aria-label="Current file"
+        class="breadcrumb min-w-0 truncate text-sm text-neutral-500"
       ></nav>
-      <main class="flex-1 overflow-y-auto">
+      <span
+        id="live-status"
+        class="live-status ml-auto size-2 shrink-0 rounded-full"
+      ></span>
+    </header>
+    <div class="relative flex h-[calc(100dvh-3rem)]">
+      <aside
+        id="sidebar"
+        class="sidebar shrink-0 overflow-y-auto border-r border-neutral-200 bg-neutral-50 p-2 text-sm dark:border-neutral-800 dark:bg-neutral-900"
+      >
+        <nav id="tree" aria-label="Files"></nav>
+      </aside>
+      <div
+        id="resizer"
+        class="resizer w-1 shrink-0 cursor-col-resize hover:bg-sky-500/40"
+      ></div>
+      <main id="main" class="min-w-0 flex-1 overflow-y-auto">
         <article
           id="content"
-          class="prose mx-auto max-w-[860px] px-8 py-10 dark:prose-invert"
+          class="prose prose-neutral mx-auto max-w-[860px] px-6 py-10 md:px-10 dark:prose-invert"
         ></article>
       </main>
     </div>

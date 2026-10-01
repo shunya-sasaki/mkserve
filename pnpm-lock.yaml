@@ -33,6 +33,9 @@ importers:
       get-port:
         specifier: ^7.2.0
         version: 7.2.0
+      hast-util-to-string:
+        specifier: ^3.0.1
+        version: 3.0.1
       ignore:
         specifier: ^7.0.11
         version: 7.0.11
@@ -84,6 +87,9 @@ importers:
       unist-util-visit:
         specifier: ^5.1.0
         version: 5.1.0
+      vfile:
+        specifier: ^6.0.3
+        version: 6.0.3
     devDependencies:
       '@tailwindcss/typography':
         specifier: ^0.5.20
