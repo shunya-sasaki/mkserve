@@ -83,10 +83,8 @@ Shiki highlighter is created once at startup (singleton) with a preloaded common
 package.json            # "name": "@shunya-sasaki/mkserve", "bin": { "mkserve": "./dist/cli.mjs" }, "files": ["dist"], "type": "module", "license": "MIT", "packageManager": "pnpm@<ver>"
 LICENSE                 # MIT
 pnpm-lock.yaml
-.oxfmtrc.json           # oxfmt config (Google style, see 9a)
-.oxlintrc.json          # oxlint config (Google style, see 9a)
 .github/workflows/publish.yml # build + publish on tag (see §13)
-vite.config.ts          # vp config: client build (src/client → dist/client)
+vite.config.ts          # all vp config: client build (src/client → dist/client), pack (CLI), test, lint (oxlint), fmt (oxfmt)
 src/cli.ts              # citty command → startServer()
 src/server/app.ts       # Fastify instance, routes, static
 src/server/render.ts    # unified pipeline + Shiki singleton
@@ -105,9 +103,10 @@ test/fixtures/…         # sample workspace covering every feature
 
 - **Package manager: pnpm.** Only `pnpm-lock.yaml` is committed; `packageManager` is pinned in `package.json` (Corepack). Distribution is described in §13.
 - **Vite+ (`vp`)**: `vp dev` (client dev), `vp build` (client bundle), `vp pack` (bundle server/CLI with tsdown), `vp test` (Vitest).
-- **Formatter: oxfmt.** **Linter: oxlint.** Configured via `.oxfmtrc.json` / `.oxlintrc.json` (rules in 9a); run through `vp fmt` / `vp lint`, which wrap them.
+- **Formatter: oxfmt.** **Linter: oxlint.** Configured in the `fmt` / `lint` blocks of `vite.config.ts` (rules in 9a) — Vite+ recommends this over separate rc files; run through `vp fmt` / `vp lint` / `vp check`, which wrap them. Do not install oxlint/oxfmt/vitest directly.
+- `vite` is a devDependency aliased to `npm:@voidzero-dev/vite-plus-core` (same version as `vite-plus`), and `pnpm.overrides` pins `vite@*` / `vitest@*` to the versions bundled with `vite-plus`; bump them together when upgrading.
 - `package.json` scripts (run with `pnpm <script>`): `dev`, `build` (client + `vp pack`), `test`, `lint`, `fmt`, `fmt:check`, `typecheck` (`tsc --noEmit`).
-- Node ≥ 20, ESM only.
+- Node ≥ 20.19, ESM only.
 
 ## 9a. Code style — Google TypeScript Style Guide
 
@@ -121,8 +120,8 @@ All source follows the [Google TypeScript Style Guide](https://google.github.io/
 - **Classes:** TS `private`/`readonly` modifiers instead of `#private`; parameter properties allowed.
 - **Statements:** `const` by default, `let` when reassigned, never `var`; `===`/`!==` only; `for…of` over `forEach` where practical; throw only `Error` instances.
 - **Docs:** JSDoc (`/** … */`) on every exported symbol; `//` for implementation comments.
-- **Formatting:** 2-space indent, single quotes, semicolons, 80-column limit — enforced by oxfmt (`.oxfmtrc.json`) configured to match Google's `gts` Prettier settings (`singleQuote: true`, `bracketSpacing: false`, `trailingComma: 'es5'`, `arrowParens: 'avoid'`).
-- **Linting:** oxlint (`.oxlintrc.json`) with rules mirroring `gts` (`no-var`, `prefer-const`, `eqeqeq`, `no-explicit-any`, `no-non-null-assertion`, `import/no-default-export`); `tsconfig` with `strict: true`, `noImplicitReturns`, `noFallthroughCasesInSwitch`.
+- **Formatting:** 2-space indent, single quotes, semicolons, 80-column limit — enforced by oxfmt (`fmt` in `vite.config.ts`) configured to match Google's `gts` Prettier settings (`singleQuote: true`, `bracketSpacing: false`, `trailingComma: 'es5'`, `arrowParens: 'avoid'`).
+- **Linting:** oxlint (`lint` in `vite.config.ts`, type-aware) with rules mirroring `gts` (`no-var`, `prefer-const`, `eqeqeq`, `no-explicit-any`, `no-non-null-assertion`, `no-namespace`, `ban-ts-comment`, `consistent-type-definitions: interface`, `consistent-type-imports`, `array-type: array-simple`, `import/no-default-export`); `tsconfig` with `strict: true`, `noImplicitReturns`, `noFallthroughCasesInSwitch`.
 - Exception: config files that tools require to default-export (`vite.config.ts`) are exempt from the no-default-export rule.
 
 ## 10. Recommended additional dependencies
