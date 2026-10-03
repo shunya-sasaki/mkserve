@@ -67,6 +67,20 @@ const ICON_PACKS: AsyncIconLoader[] = [
     loader: async () =>
       (await import('@iconify-json/simple-icons/icons.json')).default,
   },
+  {
+    name: 'noto',
+    loader: async () => (await import('@iconify-json/noto/icons.json')).default,
+  },
+  {
+    name: 'twemoji',
+    loader: async () =>
+      (await import('@iconify-json/twemoji/icons.json')).default,
+  },
+  {
+    name: 'fluent-emoji-flat',
+    loader: async () =>
+      (await import('@iconify-json/fluent-emoji-flat/icons.json')).default,
+  },
 ];
 
 /** Renders documents into the content pane. */

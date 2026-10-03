@@ -75,7 +75,8 @@ Stop the server with `Ctrl+C`.
   [Iconify](https://icon-sets.iconify.design/) icon sets available as
   `prefix:name` (e.g. `logos:aws`): `logos`, `devicon`, `fa7-brands`,
   `fa7-regular`, `fa7-solid` (Font Awesome Free), `material-icon-theme`,
-  `thesvg`, `thesvg-color`, `selfhst` (selfh.st), and `simple-icons`
+  `thesvg`, `thesvg-color`, `selfhst` (selfh.st), `simple-icons`, and the
+  emoji sets `noto`, `twemoji`, and `fluent-emoji-flat`
 - **Syntax highlighting** with Shiki for fenced code blocks
 - **GitHub alerts**: `> [!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`,
   `[!CAUTION]`

@@ -77,6 +77,15 @@ architecture-beta
   repo:L --> R:web
 ```
 
+```mermaid
+architecture-beta
+  service launch(noto:rocket)[Launch]
+  service web(twemoji:globe-with-meridians)[Web]
+  service pkg(fluent-emoji-flat:package)[Package]
+  launch:R --> L:web
+  web:R --> L:pkg
+```
+
 ## Code
 
 ```ts

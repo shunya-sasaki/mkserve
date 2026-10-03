@@ -1,6 +1,6 @@
 {
   "name": "@shunyasasaki/mkserve",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Serve a workspace of Markdown files with a live-reloading preview.",
   "keywords": [
     "cli",
@@ -76,12 +76,15 @@
     "@iconify-json/fa7-brands": "^1.2.4",
     "@iconify-json/fa7-regular": "^1.2.3",
     "@iconify-json/fa7-solid": "^1.2.5",
+    "@iconify-json/fluent-emoji-flat": "^1.2.6",
     "@iconify-json/logos": "^1.2.15",
     "@iconify-json/material-icon-theme": "^1.2.70",
+    "@iconify-json/noto": "^1.2.9",
     "@iconify-json/selfhst": "^1.2.22",
     "@iconify-json/simple-icons": "^1.2.98",
     "@iconify-json/thesvg": "^1.2.8",
     "@iconify-json/thesvg-color": "^1.2.15",
+    "@iconify-json/twemoji": "^1.2.5",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "@types/hast": "^3.0.5",
