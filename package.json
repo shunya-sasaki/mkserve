@@ -1,6 +1,6 @@
 {
-  "name": "@shunya-sasaki/mkserve",
-  "version": "0.1.0",
+  "name": "@shunyasasaki/mkserve",
+  "version": "0.1.1",
   "description": "Serve a workspace of Markdown files with a live-reloading preview.",
   "keywords": [
     "cli",
@@ -28,7 +28,8 @@
   ],
   "type": "module",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "scripts": {
     "build": "vp pack && vp build",
