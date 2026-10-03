@@ -71,7 +71,11 @@ Stop the server with `Ctrl+C`.
 - **CommonMark** and **GitHub Flavored Markdown**: tables, task lists,
   strikethrough, autolinks, footnotes, and inline HTML
 - **Math** with KaTeX: `$inline$` and `$$display$$` blocks
-- **Mermaid** diagrams in ` ```mermaid ` code blocks
+- **Mermaid** diagrams in ` ```mermaid ` code blocks, with these
+  [Iconify](https://icon-sets.iconify.design/) icon sets available as
+  `prefix:name` (e.g. `logos:aws`): `logos`, `devicon`, `fa7-brands`,
+  `fa7-regular`, `fa7-solid` (Font Awesome Free), `material-icon-theme`,
+  `thesvg`, `thesvg-color`, `selfhst` (selfh.st), and `simple-icons`
 - **Syntax highlighting** with Shiki for fenced code blocks
 - **GitHub alerts**: `> [!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`,
   `[!CAUTION]`

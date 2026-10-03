@@ -58,6 +58,25 @@ flowchart LR
   C --> D[Re-render]
 ```
 
+```mermaid
+architecture-beta
+  group app(logos:aws)[App]
+  service web(logos:react)[Web] in app
+  service api(devicon:nodejs)[API] in app
+  service db(fa7-solid:database)[DB] in app
+  service docs(material-icon-theme:markdown)[Docs] in app
+  service repo(thesvg:github)[Repo]
+  service image(thesvg-color:docker)[Image]
+  service host(selfhst:docker)[Host]
+  service build(simple-icons:vite)[Build]
+  web:R --> L:api
+  image:R --> L:host
+  build:T --> B:web
+  api:R --> L:db
+  docs:B --> T:api
+  repo:L --> R:web
+```
+
 ## Code
 
 ```ts

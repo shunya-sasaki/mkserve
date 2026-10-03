@@ -1,3 +1,4 @@
+import type {AsyncIconLoader} from 'mermaid';
 import {encodePath} from '../shared/paths.ts';
 import type {RenderResult} from '../shared/types.ts';
 
@@ -10,6 +11,63 @@ export interface ShowOptions {
 }
 
 const DARK_QUERY = '(prefers-color-scheme: dark)';
+
+/**
+ * Iconify sets usable in Mermaid as `prefix:name` (e.g. `logos:aws`). Each
+ * set is a separate chunk, fetched only when a diagram uses one of its icons.
+ */
+const ICON_PACKS: AsyncIconLoader[] = [
+  {
+    name: 'logos',
+    loader: async () =>
+      (await import('@iconify-json/logos/icons.json')).default,
+  },
+  {
+    name: 'devicon',
+    loader: async () =>
+      (await import('@iconify-json/devicon/icons.json')).default,
+  },
+  {
+    name: 'fa7-brands',
+    loader: async () =>
+      (await import('@iconify-json/fa7-brands/icons.json')).default,
+  },
+  {
+    name: 'fa7-regular',
+    loader: async () =>
+      (await import('@iconify-json/fa7-regular/icons.json')).default,
+  },
+  {
+    name: 'fa7-solid',
+    loader: async () =>
+      (await import('@iconify-json/fa7-solid/icons.json')).default,
+  },
+  {
+    name: 'material-icon-theme',
+    loader: async () =>
+      (await import('@iconify-json/material-icon-theme/icons.json')).default,
+  },
+  {
+    name: 'thesvg',
+    loader: async () =>
+      (await import('@iconify-json/thesvg/icons.json')).default,
+  },
+  {
+    name: 'thesvg-color',
+    loader: async () =>
+      (await import('@iconify-json/thesvg-color/icons.json')).default,
+  },
+  {
+    name: 'selfhst',
+    loader: async () =>
+      (await import('@iconify-json/selfhst/icons.json')).default,
+  },
+  {
+    name: 'simple-icons',
+    loader: async () =>
+      (await import('@iconify-json/simple-icons/icons.json')).default,
+  },
+];
 
 /** Renders documents into the content pane. */
 export class Viewer {
@@ -67,6 +125,7 @@ async function renderMermaid(root: HTMLElement): Promise<void> {
     return;
   }
   const {default: mermaid} = await import('mermaid');
+  mermaid.registerIconPacks(ICON_PACKS);
   mermaid.initialize({
     startOnLoad: false,
     theme: window.matchMedia(DARK_QUERY).matches ? 'dark' : 'default',
