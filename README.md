@@ -2,6 +2,7 @@
 
 ![Node.js](https://img.shields.io/badge/Node.js-5FA04E?logo=nodedotjs&labelColor=gray&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-9135FF?logo=vite&labelColor=gray&logoColor=white)
+![npm](https://img.shields.io/npm/v/@shunyasasaki/mkserve)
 ![LICENSE](https://img.shields.io/github/license/shunya-sasaki/mkserve)
 
 Serve a folder of Markdown files as a live-reloading preview site: a file tree
@@ -9,46 +10,33 @@ on the left, the rendered document on the right, refreshed every time you save.
 
 ## ⚡ Quick Start
 
-1. Point the `@shunya-sasaki` scope at GitHub Packages by adding these lines to
-   `~/.npmrc` (once; details in Setup below):
-
-   ```ini
-   @shunya-sasaki:registry=https://npm.pkg.github.com
-   //npm.pkg.github.com/:_authToken=${GH_TOKEN}
-   ```
-
-2. Install and run:
-
-   ```sh
-   pnpm add -g @shunya-sasaki/mkserve
-   mkserve --open    # serve the current directory and open the browser
-   ```
+```sh
+pnpm add -g @shunyasasaki/mkserve
+mkserve --open    # serve the current directory and open the browser
+```
 
 Open any `.md` file in your editor, save it, and the page updates in place.
 
 ## 📦 Requirements
 
 - Node.js 20.19 or later
-- A GitHub token with the `read:packages` scope (GitHub Packages requires
-  authentication even for public packages)
 
 ## ⚙️ Setup
 
-`mkserve` is published to GitHub Packages, so npm-compatible clients need to
-know where the `@shunya-sasaki` scope lives. Add these lines to `~/.npmrc`:
-
-```ini
-@shunya-sasaki:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GH_TOKEN}
-```
-
-`${GH_TOKEN}` is read from your environment; you can also paste the token
-directly. Then install with your preferred tool:
+`mkserve` is published on [npm](https://www.npmjs.com/package/@shunyasasaki/mkserve).
+Install it globally with your preferred tool:
 
 ```sh
-pnpm add -g @shunya-sasaki/mkserve              # pnpm
-mise use -g npm:@shunya-sasaki/mkserve@0.1.0    # mise
-pnpm dlx @shunya-sasaki/mkserve                 # run once without installing
+pnpm add -g @shunyasasaki/mkserve      # pnpm
+npm install -g @shunyasasaki/mkserve   # npm
+mise use -g npm:@shunyasasaki/mkserve  # mise
+```
+
+Or run it once without installing:
+
+```sh
+pnpm dlx @shunyasasaki/mkserve
+npx @shunyasasaki/mkserve
 ```
 
 ## 🚀 Usage
@@ -105,8 +93,6 @@ Stop the server with `Ctrl+C`.
 - `☰` collapses the sidebar (or opens it as a drawer on narrow screens); drag
   the sidebar edge to resize it.
 - Light and dark themes follow your system setting.
-
-## 📚 Reference
 
 ## 📄 License
 
