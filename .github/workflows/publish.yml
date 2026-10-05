@@ -7,7 +7,7 @@ on:
 
 permissions:
   contents: read
-  packages: write
+  id-token: write
 
 jobs:
   publish:
@@ -19,25 +19,15 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: pnpm
-          registry-url: https://npm.pkg.github.com
-          scope: '@shunya-sasaki'
+          node-version: 24
+          registry-url: https://registry.npmjs.org
 
-      - name: Check tag matches package version
-        run: |
-          version="$(node -p 'require("./package.json").version')"
-          if [ "v${version}" != "${GITHUB_REF_NAME}" ]; then
-            echo "Tag ${GITHUB_REF_NAME} does not match package.json version ${version}" >&2
-            exit 1
-          fi
+      - name: Match package version to git tag
+        run: pnpm version --no-git-tag-version from-git
 
       - run: pnpm install --frozen-lockfile
 
       - name: Format, lint, and type-check
         run: pnpm check
 
-      # `prepublishOnly` builds and tests before the tarball is created.
-      - run: pnpm publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm stage publish

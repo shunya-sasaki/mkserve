@@ -1,6 +1,6 @@
 {
   "name": "@shunyasasaki/mkserve",
-  "version": "0.2.0",
+  "version": "0.0.0",
   "description": "Serve a workspace of Markdown files with a live-reloading preview.",
   "keywords": [
     "cli",
