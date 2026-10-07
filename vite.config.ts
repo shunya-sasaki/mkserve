@@ -1,20 +1,45 @@
+import {resolve} from 'node:path';
 import tailwindcss from '@tailwindcss/vite';
 import {defineConfig} from 'vite-plus';
+import type {Plugin} from 'vite-plus';
+import {buildApp} from './src/server/app.ts';
+
+/**
+ * Mounts the mkserve API into the dev server, so `vp dev` alone runs the
+ * whole app. Server sources are config dependencies, so editing them
+ * restarts the dev server. The workspace is `$MKSERVE_ROOT`, defaulting to
+ * the directory the command was run from (`$INIT_CWD` under pnpm).
+ */
+function mkserveApi(): Plugin {
+  return {
+    name: 'mkserve-api',
+    apply: 'serve',
+    async configureServer(server) {
+      const root = resolve(
+        process.env['MKSERVE_ROOT'] ?? process.env['INIT_CWD'] ?? '.'
+      );
+      const app = await buildApp({root, watch: true});
+      await app.ready();
+      server.httpServer?.once('close', () => void app.close());
+      server.config.logger.info(`  mkserve workspace: ${root}`);
+      server.middlewares.use((req, res, next) => {
+        if (/^\/(api|@ws)\//.test(req.url ?? '')) {
+          app.routing(req, res);
+        } else {
+          next();
+        }
+      });
+    },
+  };
+}
 
 export default defineConfig({
   // Client SPA (`vp dev` / `vp build`).
   root: 'src/client',
-  plugins: [tailwindcss()],
+  plugins: [tailwindcss(), mkserveApi()],
   build: {
     outDir: '../../dist/client',
     emptyOutDir: true,
-  },
-  // `vp dev` serves the client; API calls go to a running `mkserve`.
-  server: {
-    proxy: {
-      '/api': 'http://127.0.0.1:3000',
-      '/@ws': 'http://127.0.0.1:3000',
-    },
   },
 
   // Server + CLI bundle (`vp pack`).

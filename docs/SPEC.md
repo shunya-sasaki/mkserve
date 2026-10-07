@@ -103,7 +103,7 @@ test/fixtures/…         # sample workspace covering every feature
 ```
 
 - **Package manager: pnpm.** Only `pnpm-lock.yaml` is committed; `packageManager` is pinned in `package.json` (Corepack). Distribution is described in §13.
-- **Vite+ (`vp`)**: `vp dev` (client dev), `vp build` (client bundle), `vp pack` (bundle server/CLI with tsdown), `vp test` (Vitest).
+- **Vite+ (`vp`)**: `vp dev` (full app dev: client with HMR + API mounted in-process, workspace `$MKSERVE_ROOT` or the current directory), `vp build` (client bundle), `vp pack` (bundle server/CLI with tsdown), `vp test` (Vitest).
 - **Formatter: oxfmt.** **Linter: oxlint.** Configured in the `fmt` / `lint` blocks of `vite.config.ts` (rules in 9a) — Vite+ recommends this over separate rc files; run through `vp fmt` / `vp lint` / `vp check`, which wrap them. Do not install oxlint/oxfmt/vitest directly.
 - `vite` is a devDependency aliased to `npm:@voidzero-dev/vite-plus-core` (same version as `vite-plus`), and `pnpm.overrides` pins `vite@*` / `vitest@*` to the versions bundled with `vite-plus`; bump them together when upgrading.
 - `package.json` scripts (run with `pnpm <script>`): `dev`, `build` (client + `vp pack`), `test`, `lint`, `fmt`, `fmt:check`, `typecheck` (`tsc --noEmit`).
